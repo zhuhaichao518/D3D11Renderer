@@ -136,10 +136,10 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow)
 
     // Create window
     g_hInst = hInstance;
-    RECT rc = { 0, 0, 2500, 1544 };
+    RECT rc = { 0, 0, 1200, 800 };
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
     g_hWnd = CreateWindow(L"TutorialWindowClass", L"Direct3D 11 Tutorial 2: Rendering a Triangle",
-        WS_OVERLAPPED | WS_POPUP | WS_VISIBLE,
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_THICKFRAME,
         CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
         nullptr);
     if (!g_hWnd)
@@ -312,7 +312,7 @@ HRESULT InitDevice()
     }
 
     // Note this tutorial doesn't handle full-screen swapchains so we block the ALT+ENTER shortcut
-    dxgiFactory->MakeWindowAssociation(g_hWnd, DXGI_MWA_NO_ALT_ENTER);
+   // dxgiFactory->MakeWindowAssociation(g_hWnd, DXGI_MWA_NO_ALT_ENTER);
 
     dxgiFactory->Release();
 
@@ -520,6 +520,17 @@ void Render()
     // 获取CurrentData.Frame的描述
     D3D11_TEXTURE2D_DESC descFrame;
     pFrameTexture->GetDesc(&descFrame);
+
+
+    /*D3D11_VIEWPORT viewport;
+    viewport.Width = static_cast<float>(descFrame.Width); // 使用捕获的帧宽度
+    viewport.Height = static_cast<float>(descFrame.Height); // 使用捕获的帧高度
+    viewport.MinDepth = 0.0f;
+    viewport.MaxDepth = 1.0f;
+    viewport.TopLeftX = 0;
+    viewport.TopLeftY = 0;
+
+    g_pImmediateContext->RSSetViewports(1, &viewport);*/
 
     // 比较宽度和高度
     if (descBackBuffer.Width != descFrame.Width || descBackBuffer.Height != descFrame.Height)
